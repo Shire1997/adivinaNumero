@@ -19,21 +19,35 @@ public class Interfaz extends JFrame {
     private JLabel vidas=new JLabel("Vidas: <3 <3 <3 <3 <3");
 
     public Interfaz(){
+        //iniciamos el panel
         contentPane=(JPanel) getContentPane();
         contentPane.setLayout(null);
+        
+        //agregamos el textfield del ingreso de datos y configuramos
         contentPane.add(numeroTF);
         numeroTF.setBounds(10,30,80,20);
+        
+        //se agrega y configura el botón para evaluar la respuesta
         contentPane.add(btn);
         btn.setBounds(100,30,80,20);
+        
+        //Se agrega y configura el texto de las instrucciones
         contentPane.add(instruccion);
         instruccion.setBounds(10,0,180,25);
+        
+        //Se agrega y configura el texto de las pistas y mensajes
         contentPane.add(respuesta);
         respuesta.setBounds(60,80,200,30);
+        
+        //Se agrega y configura el botón de reinicio
         contentPane.add(reinicio);
         reinicio.setBounds(185,30,90,20);
+        
+        //Se agrega y configuran las vidas del jugador
         contentPane.add(vidas);
         vidas.setBounds(10,50,120,25);
 
+        //ActionListener del botón reiniciar
         reinicio.addActionListener(
             new ActionListener() {
                 public void actionPerformed(ActionEvent e){
@@ -47,46 +61,14 @@ public class Interfaz extends JFrame {
                 }
             }
         );
+        
+      
             
-
+        //ActionListener del botón que evalua la respuesta
         btn.addActionListener(
             new ActionListener() {
                 public void actionPerformed(ActionEvent e){
-                    int numero=Integer.valueOf(numeroTF.getText());
-                    if(numero==num){
-                    respuesta.setText("HAZ ACERTADO!!!! :D");
-                    btn.setEnabled(false);
-                    contentPane.setBackground(Color.ORANGE);
-                    }else if((Math.abs(numero-num)>=50) && intento<5){
-                        respuesta.setText(numero+" muy frio");
-                        contentPane.setBackground(Color.BLUE);
-                        Vidas();
-                    }else if(Math.abs(numero-num)<50 && Math.abs(numero-num)>=40 && intento<5){
-                        respuesta.setText(numero+" frio");
-                        contentPane.setBackground(Color.CYAN);
-                        Vidas();
-                    }else if(Math.abs(numero-num)<40 && Math.abs(numero-num)>=30 && intento<5){
-                        respuesta.setText(numero+" estas tibio");
-                        contentPane.setBackground(Color.GREEN);
-                        Vidas();
-                    }else if(Math.abs(numero-num)<30 && Math.abs(numero-num)>=20 && intento<5){
-                        respuesta.setText(numero+", caliente");
-                        contentPane.setBackground(Color.YELLOW);
-                        Vidas();
-                    }else if(Math.abs(numero-num)<20 && intento<5){
-                        respuesta.setText(numero+", muy caliente");
-                        contentPane.setBackground(Color.RED);
-                        Vidas();
-                    }else if(numero!=num && intento<5){
-                        respuesta.setText("intentalo de nuevo");
-                        Vidas();
-                    }else if(numero!=num && intento>=5){
-                        respuesta.setText("superaste los 5 intentos :(");
-                        btn.setEnabled(false);
-                    }
-                    
-                    
-
+                    Evaluar(numeroTF.getText());
                 }  
             }
             
@@ -115,6 +97,38 @@ public class Interfaz extends JFrame {
         initPantalla();
     }
 
+    public void Evaluar(String valor){
+        int numero=Integer.valueOf(valor);
+        if(numero==num){
+            respuesta.setText("HAZ ACERTADO!!!! :D");
+            btn.setEnabled(false);
+            contentPane.setBackground(Color.ORANGE);
+            }else if((Math.abs(numero-num)>=50) && intento<5){
+                respuesta.setText(numero+" muy frio");
+                contentPane.setBackground(Color.BLUE);
+                Vidas();
+            }else if(Math.abs(numero-num)<50 && Math.abs(numero-num)>=40 && intento<5){
+                respuesta.setText(numero+" frio");
+                contentPane.setBackground(Color.CYAN);
+                Vidas();
+            }else if(Math.abs(numero-num)<40 && Math.abs(numero-num)>=30 && intento<5){
+                respuesta.setText(numero+" estas tibio");
+                contentPane.setBackground(Color.GREEN);
+                Vidas();
+            }else if(Math.abs(numero-num)<30 && Math.abs(numero-num)>=20 && intento<5){
+                respuesta.setText(numero+", caliente");
+                contentPane.setBackground(Color.YELLOW);
+                Vidas();
+            }else if(Math.abs(numero-num)<20 && intento<5){
+                respuesta.setText(numero+", muy caliente");
+                contentPane.setBackground(Color.RED);
+                Vidas();
+            }else if(numero!=num && intento<5){
+                respuesta.setText("intentalo de nuevo");
+                Vidas();
+            }
+    }
+
     public void Vidas(){
                     intento++;
                     if(intento==1){
@@ -127,6 +141,8 @@ public class Interfaz extends JFrame {
                         vidas.setText("Vidas: <3");
                     }else if(intento==5){
                         vidas.setText("Vidas:");
+                        respuesta.setText("superaste los 5 intentos :(");
+                        btn.setEnabled(false);
                     }
                 }
 
